@@ -161,25 +161,41 @@ class Inicio:
         encabezadosUsuario = ["Nombre Completo", "Usuario", "Contraseña: "]
 
         espacioY = 80
-        id = 1
-        for campo in encabezadosUsuario:
-            self.label1 = Label(self.menuCrearUsuarios, text=campo, name = "campoLabel " + str(id), font = ('Helvetica' , 10, "bold"))
-            self.campoUsuario = Entry(self.menuCrearUsuarios, justify="left", name = "campoEntry " + str(id), font = ('Helvetica' , 10, "bold"))
+        
+        self.labelNombreCompleto = Label(self.menuCrearUsuarios, text="Nombre Completo", name = "labelNombreCompleto" , font = ('Helvetica' , 10, "bold"))
+        self.labelUsuario = Label(self.menuCrearUsuarios, text="Usuario", name = "labelUsuario" , font = ('Helvetica' , 10, "bold"))
+        self.labelClave = Label(self.menuCrearUsuarios, text="Contraseña", name = "labelClave" , font = ('Helvetica' , 10, "bold"))
+        self.campoNombreCompleto = Entry(self.menuCrearUsuarios, justify="left", name = "campoNombreCompleto", font = ('Helvetica' , 10, "bold"))
+        self.campoUsuario = Entry(self.menuCrearUsuarios, justify="left", name = "campoUsuario", font = ('Helvetica' , 10, "bold"))
+        self.campoClave = Entry(self.menuCrearUsuarios, justify="left", name = "campoClave", font = ('Helvetica' , 10, "bold"))
 
-            self.label1.place(x = self.medidaCentroMenus_X  - 100, y = self.medidaCentroMenus_Y + espacioY)
-            self.campoUsuario.place(x = self.medidaCentroMenus_X  + 100, y = self.medidaCentroMenus_Y + espacioY)
-            
-            # Asignar dinamicamente eventos a cada label creado
-            ##self.label1.bind("<Button-1>", lambda event, label = self.label1 : print(label)
-            #       
-            espacioY += 70
-            id += 1
+        self.labelNombreCompleto.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 1)
+        self.labelUsuario.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 2) 
+        self.labelClave.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 3) 
+
+        self.campoNombreCompleto.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 1)
+        self.campoUsuario.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 2)
+        self.campoClave.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 3)
+
+        self.campoClave.config(state="normal")
+
+        # Asignar dinamicamente eventos a cada label creado
+        ##self.label1.bind("<Button-1>", lambda event, label = self.label1 : print(label)
+        
           
-        self.botonCrearUsuario = Button(self.menuCrearUsuarios, command=self.hola ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
-        self.botonCrearUsuario.place(x = self.medidaCentroMenus_X, y = self.medidaCentroMenus_Y + espacioY)
-    
-    def hola(self):
+        self.botonCrearUsuario = Button(self.menuCrearUsuarios, command=self.crearUsuario ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+        self.botonCrearUsuario.place(x = self.medidaCentroMenus_X - 30 , y = self.medidaCentroMenus_Y + espacioY * 4,  width = 130, height = 30)
+
+        self.botonLimpiarFormulario = Button(self.menuCrearUsuarios, command= lambda : self.limpiarFormulario(self.campoNombreCompleto, self.campoClave, self.campoUsuario)  ,text = "Limpiar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+        self.botonLimpiarFormulario.place(x = self.medidaCentroMenus_X + 120 , y = self.medidaCentroMenus_Y + espacioY * 4,  width = 130, height = 30)
+
+    def crearUsuario(self):
         print("jeje")
+    
+    def limpiarFormulario(self, *campos):
+        for campo in campos:
+            campo.delete(0,'end')
+        
 
 Inicio()
 
