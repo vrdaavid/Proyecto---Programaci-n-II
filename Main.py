@@ -148,17 +148,13 @@ class Inicio:
     
     def mostrarMenuCrearUsuarios(self): 
         self.eliminarMenus()
-
         self.menuCrearUsuarios = Canvas(self.raiz, width = 800, height = 720, bg = "#ecf0f1", highlightthickness=0, relief='ridge')
         self.menuCrearUsuarios.pack()
-
         self.pantallas.append(self.menuCrearUsuarios)
-
         titulo = " " * (22 - len("USUARIOS")) + "USUARIOS"
         self.titulo = Label(self.menuCrearUsuarios, text=titulo, font = self.estiloLabel)
         self.titulo.place(x = self.medidaCentroMenus_X, y = self.medidaCentroMenus_Y)
 
-        encabezadosUsuario = ["Nombre Completo", "Usuario", "Contraseña: "]
 
         espacioY = 80
         
@@ -167,7 +163,7 @@ class Inicio:
         self.labelClave = Label(self.menuCrearUsuarios, text="Contraseña", name = "labelClave" , font = ('Helvetica' , 10, "bold"))
         self.campoNombreCompleto = Entry(self.menuCrearUsuarios, justify="left", name = "campoNombreCompleto", font = ('Helvetica' , 10, "bold"))
         self.campoUsuario = Entry(self.menuCrearUsuarios, justify="left", name = "campoUsuario", font = ('Helvetica' , 10, "bold"))
-        self.campoClave = Entry(self.menuCrearUsuarios, justify="left", name = "campoClave", font = ('Helvetica' , 10, "bold"))
+        self.campoClave = Entry(self.menuCrearUsuarios, justify="left", name = "campoClave", font = ('Helvetica' , 10, "bold"), show="*")
 
         self.labelNombreCompleto.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 1)
         self.labelUsuario.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 2) 
@@ -190,8 +186,15 @@ class Inicio:
         self.botonLimpiarFormulario.place(x = self.medidaCentroMenus_X + 120 , y = self.medidaCentroMenus_Y + espacioY * 4,  width = 130, height = 30)
 
     def crearUsuario(self):
-        print("jeje")
-    
+        if verificarUsuario(self.campoUsuario.get()):
+            ##agregarUsuario(self.campoNombreCompleto.get(), self.campoUsuario.get(), self.campoClave.get())
+            print ("Usuario registrado")
+            self.limpiarFormulario(self.campoNombreCompleto, self.campoClave, self.campoUsuario) 
+        
+        else:
+            print("Ya existe un usuario")
+      
+
     def limpiarFormulario(self, *campos):
         for campo in campos:
             campo.delete(0,'end')
