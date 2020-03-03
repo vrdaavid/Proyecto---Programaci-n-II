@@ -99,22 +99,29 @@ class Inicio:
         self.botonMenuInicio = Button(self.barraLateral, command = self.mostrarMenuPrincipal ,text = "Inicio",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
         self.botonMenuInicio.place(x = 40, y = 40)
 
-
+        # Botones menu usuario
         self.labelUsuarios = Label(self.barraLateral ,text = "Usuarios",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
         self.labelUsuarios.place(x = 40, y = 140)
-
-        # Botones menu usuario
+    
         self.botonMenuUsuarios1 = Button(self.barraLateral, command = self.mostrarMenuCrearUsuarios ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = ('Helvetica' , 8))
         self.botonMenuUsuarios1.place(x = 40, y = 160)
 
         self.botonMenuUsuarios4 = Button(self.barraLateral, command = self.mostrarMenuConsultarUsuarios ,text = "Consultar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = ('Helvetica' , 8))
         self.botonMenuUsuarios4.place(x = 40, y = 180)
 
+        # Botones menu miembros
 
-        ####
-        self.boton2 = Button(self.barraLateral, text = "prueba",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
-        self.boton2.place(x = 40, y = 250)
+        self.labelMiembros= Label(self.barraLateral ,text = "Miembros",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+        self.labelMiembros.place(x = 40, y = 250)
 
+        self.botonMenuMiembros1 = Button(self.barraLateral, command = self.mostrarMenuCrearMiembros ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = ('Helvetica' , 8))
+        self.botonMenuMiembros1.place(x = 40, y = 270)
+
+        self.botonMenuMiembros2 = Button(self.barraLateral, command = self.mostrarMenuConsultarUsuarios ,text = "Consultar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = ('Helvetica' , 8))
+        self.botonMenuMiembros2.place(x = 40, y = 290)
+
+
+        ###
         self.boton3 = Button(self.barraLateral, text = "prueba",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
         self.boton3.place(x = 40, y = 350)
 
@@ -195,6 +202,59 @@ class Inicio:
         self.botonLimpiarFormulario = Button(self.menuCrearUsuarios, command= lambda : self.limpiarFormulario(self.campoNombreCompleto, self.campoClave, self.campoUsuario)  ,text = "Limpiar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
         self.botonLimpiarFormulario.place(x = self.medidaCentroMenus_X + 120 , y = self.medidaCentroMenus_Y + espacioY * 5,  width = 130, height = 30)
 
+    def mostrarMenuCrearMiembros(self): 
+        self.eliminarMenus()
+        self.menuCrearMiembros = Canvas(self.raiz, width = 800, height = 720, bg = "#ecf0f1", highlightthickness=0, relief='ridge')
+        self.menuCrearMiembros.pack()
+        self.pantallas.append(self.menuCrearMiembros)
+        titulo = " " * (22 - len("MIEMBROS")) + "MIEMBROS"
+        self.titulo = Label(self.menuCrearMiembros, text=titulo, font = self.estiloLabel)
+        self.titulo.place(x = self.medidaCentroMenus_X, y = self.medidaCentroMenus_Y)
+
+        espacioY = 80
+        
+        # Labels
+        self.labelNombreCompleto = Label(self.menuCrearMiembros, text="Nombre Completo", name = "labelNombreCompleto" , font = ('Helvetica' , 10, "bold"))
+        self.labelCedula = Label(self.menuCrearMiembros, text="Usuario", name = "labelCedula" , font = ('Helvetica' , 10, "bold"))
+        self.labelFechaNacimiento= Label(self.menuCrearMiembros, text="Fecha Nacimiento", name = "labelFechaNacimiento" , font = ('Helvetica' , 10, "bold"))
+        self.labelID = Label(self.menuCrearMiembros, text="ID", name = "labelID" , font = ('Helvetica' , 10, "bold"))
+        self.labelColaboracion = Label(self.menuCrearMiembros, text="Colaboracion", name = "labelColaboracion" , font = ('Helvetica' , 10, "bold"))
+        self.labelTipo = Label(self.menuCrearMiembros, text="Tipo", name = "labelTipo" , font = ('Helvetica' , 10, "bold"))
+        
+        self.labelNombreCompleto.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 1)
+        self.labelCedula.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 2) 
+        self.labelFechaNacimiento.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 3) 
+        self.labelID.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 4) 
+        self.labelColaboracion.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 5) 
+        self.labelTipo.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 6) 
+
+        # Campos
+        self.campoNombreCompleto = Entry(self.menuCrearMiembros, justify="left", name = "campoNombreCompleto", font = ('Helvetica' , 10, "bold"))
+        self.campoCedula = Entry(self.menuCrearMiembros, justify="left", name = "campoUsuario", font = ('Helvetica' , 10, "bold"))
+        self.campoID = Entry(self.menuCrearMiembros, justify="left", name = "campoID", font = ('Helvetica' , 10, "bold"))
+        self.campoColaboracion = Entry(self.menuCrearMiembros, justify="left", name = "campoClave", font = ('Helvetica' , 10, "bold"))
+
+        self.campoNombreCompleto.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 1)
+        self.campoCedula.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 2)
+        self.campoID.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 4)
+        self.campoColaboracion.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 5)
+
+        self.campoCedula.config(state="normal")
+
+        #roles = obtenerRoles()
+
+        # Lista
+        self.listaRoles = ttk.Combobox(self.menuCrearMiembros, state="readonly")
+        self.listaRoles["values"] = ["Apadrinados", "Padrinos", "CES", "Becados", "Postulantes"]
+        self.listaRoles.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130")
+        self.listaRoles.current(0)
+
+        # Botones
+        self.botonCrearUsuario = Button(self.menuCrearMiembros, command=self.crearUsuario ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+        self.botonCrearUsuario.place(x = self.medidaCentroMenus_X - 30 , y = self.medidaCentroMenus_Y + espacioY * 7,  width = 130, height = 30)
+
+        self.botonLimpiarFormulario = Button(self.menuCrearMiembros, command= lambda : self.limpiarFormulario(self.campoNombreCompleto, self.campoClave, self.campoUsuario)  ,text = "Limpiar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+        self.botonLimpiarFormulario.place(x = self.medidaCentroMenus_X + 120 , y = self.medidaCentroMenus_Y + espacioY * 7,  width = 130, height = 30)
 
     def mostrarMenuConsultarUsuarios(self): 
         self.eliminarMenus()
@@ -202,6 +262,104 @@ class Inicio:
         self.menuConsultarUsuarios.pack()
         self.pantallas.append(self.menuConsultarUsuarios)
         titulo = " " * (22 - len("USUARIOS")) + "USUARIOS"
+        self.titulo = Label(self.menuConsultarUsuarios, text=titulo, font = self.estiloLabel)
+        self.titulo.place(x = self.medidaCentroMenus_X, y = self.medidaCentroMenus_Y)
+
+        self.usuarioEncontrado = False 
+
+        espacioY = 80
+
+         # Labels 
+        self.labelNombreCompleto = Label(self.menuConsultarUsuarios, text="Nombre Completo", name = "labelNombreCompleto" , font = ('Helvetica' , 10, "bold"))
+        self.labelUsuario = Label(self.menuConsultarUsuarios, text="Usuario", name = "labelUsuario" , font = ('Helvetica' , 10, "bold"))
+        self.labelClave = Label(self.menuConsultarUsuarios, text="Contraseña", name = "labelClave" , font = ('Helvetica' , 10, "bold"))
+
+        self.labelUsuario.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 1)
+        self.labelNombreCompleto.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 2)
+        self.labelClave.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 3) 
+
+        # Campos
+        self.campoUsuario = Entry(self.menuConsultarUsuarios, justify="left", name = "campoUsuario", font = ('Helvetica' , 10, "bold"))
+        self.campoNombreCompleto = Entry(self.menuConsultarUsuarios, justify="left", name = "campoNombreCompleto", font = ('Helvetica' , 10, "bold"))
+        self.campoClave = Entry(self.menuConsultarUsuarios, justify="left", name = "campoClave", font = ('Helvetica' , 10, "bold"), show="*")
+
+        self.campoUsuario.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 1)
+        self.campoNombreCompleto.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 2)
+        self.campoClave.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 3)
+
+        # Desactivamos los campos
+        self.campoClave.config(state="disabled")     
+        self.campoNombreCompleto.config(state="disabled") 
+        
+        # Botones
+        self.botonBuscarUsuario = Button(self.menuConsultarUsuarios, command=self.buscarUsuario ,text = "Buscar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+        self.botonBuscarUsuario.place(x = self.medidaCentroMenus_X + 280, y = self.medidaCentroMenus_Y + espacioY * 1,  width = 80, height = 25)
+        
+        # Boton Modificar Nombre
+
+        self.botonMostrarModificarNombre = Button(self.menuConsultarUsuarios, 
+                                            command=lambda: self.mostrarModificar(self.botonMostrarModificarNombre, self.botonGuardarModificarNombre, self.botonCancelarModificarNombre, 
+                                            self.medidaCentroMenus_X + 280 ,  self.medidaCentroMenus_Y + espacioY * 2,
+                                            self.medidaCentroMenus_X + 400 ,   self.medidaCentroMenus_Y + espacioY * 2, 
+                                            self.campoNombreCompleto)  
+                                            ,text = "Modificar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+       
+        self.botonMostrarModificarNombre.place(x = self.medidaCentroMenus_X + 280, y = self.medidaCentroMenus_Y + espacioY * 2,  width = 80, height = 25)
+
+
+        self.botonGuardarModificarNombre = Button(self.menuConsultarUsuarios, 
+                                                    command= lambda: self.actualizarInformacionUsuario("NombreCompleto", 
+                                                    self.campoNombreCompleto, self.botonCancelarModificarNombre) ,                                                  
+                                                    text = "Guardar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+       
+        self.botonCancelarModificarNombre = Button(self.menuConsultarUsuarios, 
+                                                    command=lambda: self.esconderBotonesModificar(self.botonMostrarModificarNombre,  
+                                                    self.medidaCentroMenus_X + 280, self.medidaCentroMenus_Y + espacioY * 2, 
+                                                    self.botonGuardarModificarNombre, self.botonCancelarModificarNombre, 
+                                                    self.campoNombreCompleto)  
+                                                    ,text = "Cancelar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+        
+
+         # Boton Modificar Contraseña
+
+        # Cambiar nombre de variables botonMostrar, botonGuardar, botonCancelar, nombre de columna y los campos 
+
+
+        self.botonMostrarModificarClave = Button(self.menuConsultarUsuarios, 
+                                            command=lambda: self.mostrarModificar(self.botonMostrarModificarClave, self.botonGuardarModificarClave, self.botonCancelarModificarClave, 
+                                            self.medidaCentroMenus_X + 280 ,  self.medidaCentroMenus_Y + espacioY * 3,
+                                            self.medidaCentroMenus_X + 400 ,   self.medidaCentroMenus_Y + espacioY * 3, 
+                                            self.campoClave)  
+                                            ,text = "Modificar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+       
+        self.botonMostrarModificarClave.place(x = self.medidaCentroMenus_X + 280, y = self.medidaCentroMenus_Y + espacioY * 3,  width = 80, height = 25)
+
+
+        self.botonGuardarModificarClave = Button(self.menuConsultarUsuarios, 
+                                                    command= lambda: self.actualizarInformacionUsuario("Clave", 
+                                                    self.campoClave, self.botonCancelarModificarClave) ,                                                  
+                                                    text = "Guardar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+       
+        self.botonCancelarModificarClave = Button(self.menuConsultarUsuarios, 
+                                                    command=lambda: self.esconderBotonesModificar(self.botonMostrarModificarClave,  
+                                                    self.medidaCentroMenus_X + 280, self.medidaCentroMenus_Y + espacioY * 3, 
+                                                    self.botonGuardarModificarClave, self.botonCancelarModificarClave, 
+                                                    self.campoClave)  
+                                                    ,text = "Cancelar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+
+
+        self.botonBorrarUsuario = Button(self.menuConsultarUsuarios, 
+                                                    command=lambda: print("borrar")
+                                                    ,text = "Borrar",  bg = self.colorError, fg = "white",  relief = "flat", font = self.estiloBoton)
+
+        self.botonBorrarUsuario.place(x = self.medidaCentroMenus_X + 50, y = self.medidaCentroMenus_Y + espacioY * 4,  width = 200, height = 25)  
+
+    def mostrarMenuConsultarMiembros(self): 
+        self.eliminarMenus()
+        self.menuCrearMiembros = Canvas(self.raiz, width = 800, height = 720, bg = "#ecf0f1", highlightthickness=0, relief='ridge')
+        self.menuCrearMiembros.pack()
+        self.pantallas.append(self.menuConsultarUsuarios)
+        titulo = " " * (22 - len("MIEMBROS")) + "MIEMBROS"
         self.titulo = Label(self.menuConsultarUsuarios, text=titulo, font = self.estiloLabel)
         self.titulo.place(x = self.medidaCentroMenus_X, y = self.medidaCentroMenus_Y)
 
@@ -343,7 +501,6 @@ class Inicio:
         self.mostrarMensaje("Exito", "Cambios Realizados") 
     
         return None
-
 
     def crearUsuario(self):
         if self.campoClave.get().strip() == "" or self.campoClave.get().strip() == " " or self.campoClave.get() == False:
