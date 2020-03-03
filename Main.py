@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter.font as TkFont
 from Utilidades import * 
 from tkinter import messagebox
+from tkinter import ttk
 
 
 class Inicio:
@@ -129,7 +130,6 @@ class Inicio:
         self.barraLateral.destroy()
         self.mostrarLogin()
 
-
     def mostrarMenuPrincipal(self):
         self.eliminarMenus()
 
@@ -142,8 +142,7 @@ class Inicio:
 
         self.titulo = Label(self.menuPrincipal, text=titulo, font = self.estiloLabel)
         self.titulo.place(x = self.medidaCentroMenus_X, y = self.medidaCentroMenus_Y)
-    
-    
+       
     def mostrarMenuCrearUsuarios(self): 
         self.eliminarMenus()
         self.menuCrearUsuarios = Canvas(self.raiz, width = 800, height = 720, bg = "#ecf0f1", highlightthickness=0, relief='ridge')
@@ -159,11 +158,13 @@ class Inicio:
         self.labelNombreCompleto = Label(self.menuCrearUsuarios, text="Nombre Completo", name = "labelNombreCompleto" , font = ('Helvetica' , 10, "bold"))
         self.labelUsuario = Label(self.menuCrearUsuarios, text="Usuario", name = "labelUsuario" , font = ('Helvetica' , 10, "bold"))
         self.labelClave = Label(self.menuCrearUsuarios, text="Contraseña", name = "labelClave" , font = ('Helvetica' , 10, "bold"))
-
+        self.labelRol = Label(self.menuCrearUsuarios, text="Rol", name = "labelRol" , font = ('Helvetica' , 10, "bold"))
         
         self.labelNombreCompleto.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 1)
         self.labelUsuario.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 2) 
         self.labelClave.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 3) 
+        self.labelRol.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 4) 
+
 
         # Campos
         self.campoNombreCompleto = Entry(self.menuCrearUsuarios, justify="left", name = "campoNombreCompleto", font = ('Helvetica' , 10, "bold"))
@@ -176,15 +177,23 @@ class Inicio:
 
         self.campoClave.config(state="normal")
 
+        #roles = obtenerRoles()
+
+        # Lista
+        self.listaRoles = ttk.Combobox(self.menuCrearUsuarios, state="readonly")
+        self.listaRoles["values"] = ["end", "hola", "adios"]
+        self.listaRoles.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 4, height="30", width="130")
+        self.listaRoles.current(0)
+
         # Asignar dinamicamente eventos a cada label creado
         ##self.label1.bind("<Button-1>", lambda event, label = self.label1 : print(label)
         
         # Botones
         self.botonCrearUsuario = Button(self.menuCrearUsuarios, command=self.crearUsuario ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
-        self.botonCrearUsuario.place(x = self.medidaCentroMenus_X - 30 , y = self.medidaCentroMenus_Y + espacioY * 4,  width = 130, height = 30)
+        self.botonCrearUsuario.place(x = self.medidaCentroMenus_X - 30 , y = self.medidaCentroMenus_Y + espacioY * 5,  width = 130, height = 30)
 
         self.botonLimpiarFormulario = Button(self.menuCrearUsuarios, command= lambda : self.limpiarFormulario(self.campoNombreCompleto, self.campoClave, self.campoUsuario)  ,text = "Limpiar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
-        self.botonLimpiarFormulario.place(x = self.medidaCentroMenus_X + 120 , y = self.medidaCentroMenus_Y + espacioY * 4,  width = 130, height = 30)
+        self.botonLimpiarFormulario.place(x = self.medidaCentroMenus_X + 120 , y = self.medidaCentroMenus_Y + espacioY * 5,  width = 130, height = 30)
 
 
     def mostrarMenuConsultarUsuarios(self): 
@@ -221,9 +230,6 @@ class Inicio:
         # Desactivamos los campos
         self.campoClave.config(state="disabled")     
         self.campoNombreCompleto.config(state="disabled") 
-
-        # Asignar dinamicamente eventos a cada label creado
-        ##self.label1.bind("<Button-1>", lambda event, label = self.label1 : print(label)
         
         # Botones
         self.botonBuscarUsuario = Button(self.menuConsultarUsuarios, command=self.buscarUsuario ,text = "Buscar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
@@ -231,31 +237,62 @@ class Inicio:
         
         # Boton Modificar Nombre
 
-
-        self.botonMostrarModificar = Button(self.menuConsultarUsuarios, 
-                                            command=lambda: self.mostrarModificar(self.botonMostrarModificar, self.botonGuardarModificarNombre, self.botonCancelarGuardarModificarNombre, 
+        self.botonMostrarModificarNombre = Button(self.menuConsultarUsuarios, 
+                                            command=lambda: self.mostrarModificar(self.botonMostrarModificarNombre, self.botonGuardarModificarNombre, self.botonCancelarModificarNombre, 
                                             self.medidaCentroMenus_X + 280 ,  self.medidaCentroMenus_Y + espacioY * 2,
                                             self.medidaCentroMenus_X + 400 ,   self.medidaCentroMenus_Y + espacioY * 2, 
                                             self.campoNombreCompleto)  
                                             ,text = "Modificar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
        
-        self.botonMostrarModificar.place(x = self.medidaCentroMenus_X + 280, y = self.medidaCentroMenus_Y + espacioY * 2,  width = 80, height = 25)
+        self.botonMostrarModificarNombre.place(x = self.medidaCentroMenus_X + 280, y = self.medidaCentroMenus_Y + espacioY * 2,  width = 80, height = 25)
 
 
         self.botonGuardarModificarNombre = Button(self.menuConsultarUsuarios, 
                                                     command= lambda: self.actualizarInformacionUsuario("NombreCompleto", 
-                                                    self.campoNombreCompleto, self.botonCancelarGuardarModificarNombre) ,                                                  
+                                                    self.campoNombreCompleto, self.botonCancelarModificarNombre) ,                                                  
                                                     text = "Guardar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
        
-        self.botonCancelarGuardarModificarNombre = Button(self.menuConsultarUsuarios, 
-                                                    command=lambda: self.esconderBotonesModificar(self.botonMostrarModificar,  
+        self.botonCancelarModificarNombre = Button(self.menuConsultarUsuarios, 
+                                                    command=lambda: self.esconderBotonesModificar(self.botonMostrarModificarNombre,  
                                                     self.medidaCentroMenus_X + 280, self.medidaCentroMenus_Y + espacioY * 2, 
-                                                    self.botonGuardarModificarNombre, self.botonCancelarGuardarModificarNombre, 
+                                                    self.botonGuardarModificarNombre, self.botonCancelarModificarNombre, 
                                                     self.campoNombreCompleto)  
                                                     ,text = "Cancelar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
         
 
          # Boton Modificar Contraseña
+
+        # Cambiar nombre de variables botonMostrar, botonGuardar, botonCancelar, nombre de columna y los campos 
+
+
+        self.botonMostrarModificarClave = Button(self.menuConsultarUsuarios, 
+                                            command=lambda: self.mostrarModificar(self.botonMostrarModificarClave, self.botonGuardarModificarClave, self.botonCancelarModificarClave, 
+                                            self.medidaCentroMenus_X + 280 ,  self.medidaCentroMenus_Y + espacioY * 3,
+                                            self.medidaCentroMenus_X + 400 ,   self.medidaCentroMenus_Y + espacioY * 3, 
+                                            self.campoClave)  
+                                            ,text = "Modificar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+       
+        self.botonMostrarModificarClave.place(x = self.medidaCentroMenus_X + 280, y = self.medidaCentroMenus_Y + espacioY * 3,  width = 80, height = 25)
+
+
+        self.botonGuardarModificarClave = Button(self.menuConsultarUsuarios, 
+                                                    command= lambda: self.actualizarInformacionUsuario("Clave", 
+                                                    self.campoClave, self.botonCancelarModificarClave) ,                                                  
+                                                    text = "Guardar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+       
+        self.botonCancelarModificarClave = Button(self.menuConsultarUsuarios, 
+                                                    command=lambda: self.esconderBotonesModificar(self.botonMostrarModificarClave,  
+                                                    self.medidaCentroMenus_X + 280, self.medidaCentroMenus_Y + espacioY * 3, 
+                                                    self.botonGuardarModificarClave, self.botonCancelarModificarClave, 
+                                                    self.campoClave)  
+                                                    ,text = "Cancelar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+
+
+        self.botonBorrarUsuario = Button(self.menuConsultarUsuarios, 
+                                                    command=lambda: print("borrar")
+                                                    ,text = "Borrar",  bg = self.colorError, fg = "white",  relief = "flat", font = self.estiloBoton)
+
+        self.botonBorrarUsuario.place(x = self.medidaCentroMenus_X + 50, y = self.medidaCentroMenus_Y + espacioY * 4,  width = 200, height = 25)              
 
     def esconderBotonesModificar(self, botonMostrar, x1, y1, button1, button2, campoDeshabilitar):
         # Esconde button1 y button2 y muestra el boton botonMostrar
@@ -336,8 +373,7 @@ class Inicio:
     def limpiarFormulario(self, *campos):
         for campo in campos:
             campo.delete(0,'end')
-        
-    
+         
  
     def mostrarMensaje(self, titulo, mensaje):
         messagebox.showinfo(titulo, mensaje)
