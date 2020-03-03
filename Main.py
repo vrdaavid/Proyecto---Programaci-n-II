@@ -4,6 +4,9 @@ from Utilidades import *
 from tkinter import messagebox
 from tkinter import ttk
 
+import datetime
+
+
 
 class Inicio:
     # atributos de la clase Inicio, acá se colocan todas las variables globales dentro del código para poder parametrizar tamaños, colores, etc
@@ -202,60 +205,6 @@ class Inicio:
         self.botonLimpiarFormulario = Button(self.menuCrearUsuarios, command= lambda : self.limpiarFormulario(self.campoNombreCompleto, self.campoClave, self.campoUsuario)  ,text = "Limpiar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
         self.botonLimpiarFormulario.place(x = self.medidaCentroMenus_X + 120 , y = self.medidaCentroMenus_Y + espacioY * 5,  width = 130, height = 30)
 
-    def mostrarMenuCrearMiembros(self): 
-        self.eliminarMenus()
-        self.menuCrearMiembros = Canvas(self.raiz, width = 800, height = 720, bg = "#ecf0f1", highlightthickness=0, relief='ridge')
-        self.menuCrearMiembros.pack()
-        self.pantallas.append(self.menuCrearMiembros)
-        titulo = " " * (22 - len("MIEMBROS")) + "MIEMBROS"
-        self.titulo = Label(self.menuCrearMiembros, text=titulo, font = self.estiloLabel)
-        self.titulo.place(x = self.medidaCentroMenus_X, y = self.medidaCentroMenus_Y)
-
-        espacioY = 80
-        
-        # Labels
-        self.labelNombreCompleto = Label(self.menuCrearMiembros, text="Nombre Completo", name = "labelNombreCompleto" , font = ('Helvetica' , 10, "bold"))
-        self.labelCedula = Label(self.menuCrearMiembros, text="Usuario", name = "labelCedula" , font = ('Helvetica' , 10, "bold"))
-        self.labelFechaNacimiento= Label(self.menuCrearMiembros, text="Fecha Nacimiento", name = "labelFechaNacimiento" , font = ('Helvetica' , 10, "bold"))
-        self.labelID = Label(self.menuCrearMiembros, text="ID", name = "labelID" , font = ('Helvetica' , 10, "bold"))
-        self.labelColaboracion = Label(self.menuCrearMiembros, text="Colaboracion", name = "labelColaboracion" , font = ('Helvetica' , 10, "bold"))
-        self.labelTipo = Label(self.menuCrearMiembros, text="Tipo", name = "labelTipo" , font = ('Helvetica' , 10, "bold"))
-        
-        self.labelNombreCompleto.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 1)
-        self.labelCedula.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 2) 
-        self.labelFechaNacimiento.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 3) 
-        self.labelID.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 4) 
-        self.labelColaboracion.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 5) 
-        self.labelTipo.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 6) 
-
-        # Campos
-        self.campoNombreCompleto = Entry(self.menuCrearMiembros, justify="left", name = "campoNombreCompleto", font = ('Helvetica' , 10, "bold"))
-        self.campoCedula = Entry(self.menuCrearMiembros, justify="left", name = "campoUsuario", font = ('Helvetica' , 10, "bold"))
-        self.campoID = Entry(self.menuCrearMiembros, justify="left", name = "campoID", font = ('Helvetica' , 10, "bold"))
-        self.campoColaboracion = Entry(self.menuCrearMiembros, justify="left", name = "campoClave", font = ('Helvetica' , 10, "bold"))
-
-        self.campoNombreCompleto.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 1)
-        self.campoCedula.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 2)
-        self.campoID.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 4)
-        self.campoColaboracion.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 5)
-
-        self.campoCedula.config(state="normal")
-
-        #roles = obtenerRoles()
-
-        # Lista
-        self.listaRoles = ttk.Combobox(self.menuCrearMiembros, state="readonly")
-        self.listaRoles["values"] = ["Apadrinados", "Padrinos", "CES", "Becados", "Postulantes"]
-        self.listaRoles.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130")
-        self.listaRoles.current(0)
-
-        # Botones
-        self.botonCrearUsuario = Button(self.menuCrearMiembros, command=self.crearUsuario ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
-        self.botonCrearUsuario.place(x = self.medidaCentroMenus_X - 30 , y = self.medidaCentroMenus_Y + espacioY * 7,  width = 130, height = 30)
-
-        self.botonLimpiarFormulario = Button(self.menuCrearMiembros, command= lambda : self.limpiarFormulario(self.campoNombreCompleto, self.campoClave, self.campoUsuario)  ,text = "Limpiar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
-        self.botonLimpiarFormulario.place(x = self.medidaCentroMenus_X + 120 , y = self.medidaCentroMenus_Y + espacioY * 7,  width = 130, height = 30)
-
     def mostrarMenuConsultarUsuarios(self): 
         self.eliminarMenus()
         self.menuConsultarUsuarios = Canvas(self.raiz, width = 800, height = 720, bg = "#ecf0f1", highlightthickness=0, relief='ridge')
@@ -353,6 +302,84 @@ class Inicio:
                                                     ,text = "Borrar",  bg = self.colorError, fg = "white",  relief = "flat", font = self.estiloBoton)
 
         self.botonBorrarUsuario.place(x = self.medidaCentroMenus_X + 50, y = self.medidaCentroMenus_Y + espacioY * 4,  width = 200, height = 25)  
+
+    def mostrarMenuCrearMiembros(self): 
+        self.eliminarMenus()
+        self.menuCrearMiembros = Canvas(self.raiz, width = 800, height = 720, bg = "#ecf0f1", highlightthickness=0, relief='ridge')
+        self.menuCrearMiembros.pack()
+        self.pantallas.append(self.menuCrearMiembros)
+        titulo = " " * (22 - len("MIEMBROS")) + "MIEMBROS"
+        self.titulo = Label(self.menuCrearMiembros, text=titulo, font = self.estiloLabel)
+        self.titulo.place(x = self.medidaCentroMenus_X, y = self.medidaCentroMenus_Y)
+
+        espacioY = 80
+        
+        # Labels
+        self.labelNombreCompleto = Label(self.menuCrearMiembros, text="Nombre Completo", name = "labelNombreCompleto" , font = ('Helvetica' , 10, "bold"))
+        self.labelCedula = Label(self.menuCrearMiembros, text="Usuario", name = "labelCedula" , font = ('Helvetica' , 10, "bold"))
+        self.labelFechaNacimiento= Label(self.menuCrearMiembros, text="Fecha Nacimiento", name = "labelFechaNacimiento" , font = ('Helvetica' , 10, "bold"))
+        self.labelID = Label(self.menuCrearMiembros, text="ID", name = "labelID" , font = ('Helvetica' , 10, "bold"))
+        self.labelColaboracion = Label(self.menuCrearMiembros, text="Colaboracion", name = "labelColaboracion" , font = ('Helvetica' , 10, "bold"))
+        self.labelTipo = Label(self.menuCrearMiembros, text="Tipo", name = "labelTipo" , font = ('Helvetica' , 10, "bold"))
+        
+        self.labelNombreCompleto.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 1)
+        self.labelCedula.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 2) 
+        self.labelFechaNacimiento.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 3) 
+        self.labelID.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 4) 
+        self.labelColaboracion.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 5) 
+        self.labelTipo.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 6) 
+
+        # Campos
+        self.campoNombreCompleto = Entry(self.menuCrearMiembros, justify="left", name = "campoNombreCompleto", font = ('Helvetica' , 10, "bold"))
+        self.campoCedula = Entry(self.menuCrearMiembros, justify="left", name = "campoUsuario", font = ('Helvetica' , 10, "bold"))
+        self.campoID = Entry(self.menuCrearMiembros, justify="left", name = "campoID", font = ('Helvetica' , 10, "bold"))
+        self.campoColaboracion = Entry(self.menuCrearMiembros, justify="left", name = "campoClave", font = ('Helvetica' , 10, "bold"))
+
+        self.campoNombreCompleto.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 1)
+        self.campoCedula.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 2)
+        self.campoID.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 4)
+        self.campoColaboracion.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 5)
+
+        self.campoCedula.config(state="normal")
+
+        # Fecha
+
+        #roles = obtenerRoles()
+
+        # Lista
+
+        self.listaDias = ttk.Combobox(self.menuCrearMiembros, state="readonly")
+        self.listaDias["values"] = [x for x in range(1, 32)]
+        self.listaDias.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 3, height="35", width="50")
+        self.listaDias.current(0)
+
+
+        self.listaMeses = ttk.Combobox(self.menuCrearMiembros, state="readonly")
+        self.listaMeses["values"] = [x for x in range(1, 13)]
+        self.listaMeses.place(x = self.medidaCentroMenus_X  + 180, y = self.medidaCentroMenus_Y + espacioY * 3, height="35", width="50")
+        self.listaMeses.current(0)
+
+        self.listaAnos = ttk.Combobox(self.menuCrearMiembros, state="readonly")
+        self.listaAnos["values"] = [x for x in range(1950, int(datetime.datetime.now().year))]
+        self.listaAnos.place(x = self.medidaCentroMenus_X  + 240, y = self.medidaCentroMenus_Y + espacioY * 3, height="35", width="50")
+        self.listaAnos.current(0)
+
+
+        self.listaRoles = ttk.Combobox(self.menuCrearMiembros, state="readonly")
+        self.listaRoles["values"] = ["Apadrinados", "Padrinos", "CES", "Becados", "Postulantes"]
+        self.listaRoles.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130")
+        self.listaRoles.current(0)
+
+        # Botones
+        self.botonCrearUsuario = Button(self.menuCrearMiembros, command=self.crearUsuario ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+        self.botonCrearUsuario.place(x = self.medidaCentroMenus_X - 30 , y = self.medidaCentroMenus_Y + espacioY * 7,  width = 130, height = 30)
+
+        self.botonLimpiarFormulario = Button(self.menuCrearMiembros, 
+                                    command = lambda : self.limpiarFormulario(self.campoNombreCompleto, self.campoColaboracion, self.campoID, self.campoCedula)
+                                    , text = "Limpiar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+
+        self.botonLimpiarFormulario.place(x = self.medidaCentroMenus_X + 120 , y = self.medidaCentroMenus_Y + espacioY * 7,  width = 130, height = 30)
+
 
     def mostrarMenuConsultarMiembros(self): 
         self.eliminarMenus()
