@@ -64,6 +64,36 @@ def verificarUsuario(pUsuario):
         db.rollback()
         return False
     
+def verificarMiembro(pCedula):
+    db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
+
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "SELECT * FROM Miembros WHERE Cedula ='{0}'".format(pCedula)
+    
+    try:
+        
+        # Ejecutar el comando SQL 
+        result = cursor.execute(sql)
+
+        # Guardar cambios
+        db.commit()
+            
+        # desconectar del servidor
+        db.close()
+
+        if result == 1: # Si es 1, es porque el select trajo datos
+            return True
+    
+        else:
+            return False
+
+    except:
+        # Rollback in case there is any error
+        db.rollback()
+        return False
+
 def agregarUsuario(pNombre, pUsuario, pClave, pRol):
 
     db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
@@ -71,7 +101,7 @@ def agregarUsuario(pNombre, pUsuario, pClave, pRol):
     cursor = db.cursor()
 
     # Prepare SQL query to INSERT a record into the database.
-    sql = "INSERT INTO Usuarios (NombreCompleto,NombreUsuario, Clave) values ('{0}', '{1}', '{2}')".format(pNombre, pUsuario ,pClave)
+    sql = "INSERT INTO Usuarios (NombreCompleto,NombreUsuario, Clave, Rol) values ('{0}', '{1}', '{2}', '{3}')".format(pNombre, pUsuario ,pClave, pRol)
     
     try:
         
@@ -90,6 +120,36 @@ def agregarUsuario(pNombre, pUsuario, pClave, pRol):
     except:
         # Rollback in case there is any error
         db.rollback()
+        return False
+
+def agregarMiembro(pNombre, pCedula,  pFechaNacimiento, pID, pColaboracion, pTipo, pCategoriaApadrinado):
+
+    db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
+
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+
+    sql = "INSERT INTO Miembros values ('{0}', '{1}', STR_TO_DATE('{2}', '%Y-%m-%d'), '{3}', {4}, '{5}', '{6}')".format(pNombre, pCedula,  pFechaNacimiento, pID, pColaboracion, pTipo, pCategoriaApadrinado)
+    
+    try:
+        
+        # Ejecutar el comando SQL 
+        cursor.execute(sql)
+
+        # Guardar cambios
+        db.commit()
+ 
+        # desconectar del servidor
+        db.close()
+        
+        return True
+
+
+    except Exception as e:
+        # Rollback in case there is any error
+        db.rollback()
+        print(e)
         return False
 
 def obtenerInformacionUsuario(pUsuario):

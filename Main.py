@@ -124,8 +124,8 @@ class Inicio:
         self.botonMenuMiembros2.place(x = 40, y = 290)
 
 
-        ###
-        self.boton3 = Button(self.barraLateral, text = "prueba",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
+        # Boton Menu Niños
+        self.boton3 = Button(self.barraLateral, text = "Apadrinados",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
         self.boton3.place(x = 40, y = 350)
 
         self.boton3 = Button(self.barraLateral, text = "prueba",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
@@ -175,7 +175,6 @@ class Inicio:
         self.labelClave.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 3) 
         self.labelRol.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 4) 
 
-
         # Campos
         self.campoNombreCompleto = Entry(self.menuCrearUsuarios, justify="left", name = "campoNombreCompleto", font = ('Helvetica' , 10, "bold"))
         self.campoUsuario = Entry(self.menuCrearUsuarios, justify="left", name = "campoUsuario", font = ('Helvetica' , 10, "bold"))
@@ -191,7 +190,7 @@ class Inicio:
 
         # Lista
         self.listaRoles = ttk.Combobox(self.menuCrearUsuarios, state="readonly")
-        self.listaRoles["values"] = ["end", "hola", "adios"]
+        self.listaRoles["values"] = ["Administrador", "Agente"]
         self.listaRoles.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 4, height="30", width="130")
         self.listaRoles.current(0)
 
@@ -316,7 +315,7 @@ class Inicio:
         
         # Labels
         self.labelNombreCompleto = Label(self.menuCrearMiembros, text="Nombre Completo", name = "labelNombreCompleto" , font = ('Helvetica' , 10, "bold"))
-        self.labelCedula = Label(self.menuCrearMiembros, text="Usuario", name = "labelCedula" , font = ('Helvetica' , 10, "bold"))
+        self.labelCedula = Label(self.menuCrearMiembros, text="Cedula", name = "labelCedula" , font = ('Helvetica' , 10, "bold"))
         self.labelFechaNacimiento= Label(self.menuCrearMiembros, text="Fecha Nacimiento", name = "labelFechaNacimiento" , font = ('Helvetica' , 10, "bold"))
         self.labelID = Label(self.menuCrearMiembros, text="ID", name = "labelID" , font = ('Helvetica' , 10, "bold"))
         self.labelColaboracion = Label(self.menuCrearMiembros, text="Colaboracion", name = "labelColaboracion" , font = ('Helvetica' , 10, "bold"))
@@ -328,6 +327,17 @@ class Inicio:
         self.labelID.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 4) 
         self.labelColaboracion.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 5) 
         self.labelTipo.place(x = self.medidaCentroMenus_X  - 30, y = self.medidaCentroMenus_Y + espacioY * 6) 
+
+
+        # Labels Fecha
+        self.labelDia = Label(self.menuCrearMiembros, text="Dia", font = ('Helvetica' , 9, "bold"))
+        self.labelDia.place(x = self.medidaCentroMenus_X  + 130, y = self.medidaCentroMenus_Y + espacioY * 3 * 0.9 ) 
+
+        self.labelMes = Label(self.menuCrearMiembros, text="Mes", font = ('Helvetica' , 9, "bold"))
+        self.labelMes.place(x = self.medidaCentroMenus_X  + 190, y = self.medidaCentroMenus_Y + espacioY * 3 * 0.9 ) 
+
+        self.labelAno = Label(self.menuCrearMiembros, text="Año", font = ('Helvetica' , 9, "bold"))
+        self.labelAno.place(x = self.medidaCentroMenus_X  + 250, y = self.medidaCentroMenus_Y + espacioY * 3 * 0.9 ) 
 
         # Campos
         self.campoNombreCompleto = Entry(self.menuCrearMiembros, justify="left", name = "campoNombreCompleto", font = ('Helvetica' , 10, "bold"))
@@ -342,44 +352,45 @@ class Inicio:
 
         self.campoCedula.config(state="normal")
 
-        # Fecha
-
-        #roles = obtenerRoles()
-
         # Lista
-
         self.listaDias = ttk.Combobox(self.menuCrearMiembros, state="readonly")
-        self.listaDias["values"] = [x for x in range(1, 32)]
+        self.listaDias["values"] = [""] + [x for x in range(1, 32)]
         self.listaDias.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 3, height="35", width="50")
         self.listaDias.current(0)
 
-
         self.listaMeses = ttk.Combobox(self.menuCrearMiembros, state="readonly")
-        self.listaMeses["values"] = [x for x in range(1, 13)]
+        self.listaMeses["values"] = [""] + [x for x in range(1, 13)]
         self.listaMeses.place(x = self.medidaCentroMenus_X  + 180, y = self.medidaCentroMenus_Y + espacioY * 3, height="35", width="50")
         self.listaMeses.current(0)
 
         self.listaAnos = ttk.Combobox(self.menuCrearMiembros, state="readonly")
-        self.listaAnos["values"] = [x for x in range(1950, int(datetime.datetime.now().year))]
+        self.listaAnos["values"] = [""] + sorted([x for x in range(1950, int(datetime.datetime.now().year))], reverse=True)
         self.listaAnos.place(x = self.medidaCentroMenus_X  + 240, y = self.medidaCentroMenus_Y + espacioY * 3, height="35", width="50")
         self.listaAnos.current(0)
 
-
         self.listaRoles = ttk.Combobox(self.menuCrearMiembros, state="readonly")
-        self.listaRoles["values"] = ["Apadrinados", "Padrinos", "CES", "Becados", "Postulantes"]
+        self.listaRoles["values"] = ["Padrinos", "Apadrinados", "CES", "Becados", "Postulantes"]
         self.listaRoles.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130")
         self.listaRoles.current(0)
 
+        # Crear trigger para la lista, en caso de seleccionar apadrinado, mostrar la lista de categorias
+        self.listaRoles.bind('<<ComboboxSelected>>', 
+                             lambda event: self.listaCategorias.place(x = self.medidaCentroMenus_X  + 270, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130") 
+                                                                     if (self.listaRoles.get() == "Apadrinados") else self.listaCategorias.place_forget())
+
+        self.listaCategorias = ttk.Combobox(self.menuCrearMiembros, state="readonly")
+        self.listaCategorias["values"] = ["", "Niño", "Adulto Mayor"]
+        self.listaCategorias.current(0)
+
         # Botones
-        self.botonCrearUsuario = Button(self.menuCrearMiembros, command=self.crearUsuario ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
-        self.botonCrearUsuario.place(x = self.medidaCentroMenus_X - 30 , y = self.medidaCentroMenus_Y + espacioY * 7,  width = 130, height = 30)
+        self.botonCrearMiembro = Button(self.menuCrearMiembros, command=self.crearMiembro ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+        self.botonCrearMiembro.place(x = self.medidaCentroMenus_X - 30 , y = self.medidaCentroMenus_Y + espacioY * 7,  width = 130, height = 30)
 
         self.botonLimpiarFormulario = Button(self.menuCrearMiembros, 
                                     command = lambda : self.limpiarFormulario(self.campoNombreCompleto, self.campoColaboracion, self.campoID, self.campoCedula)
                                     , text = "Limpiar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
 
         self.botonLimpiarFormulario.place(x = self.medidaCentroMenus_X + 120 , y = self.medidaCentroMenus_Y + espacioY * 7,  width = 130, height = 30)
-
 
     def mostrarMenuConsultarMiembros(self): 
         self.eliminarMenus()
@@ -479,6 +490,8 @@ class Inicio:
 
         self.botonBorrarUsuario.place(x = self.medidaCentroMenus_X + 50, y = self.medidaCentroMenus_Y + espacioY * 4,  width = 200, height = 25)              
 
+# Funciones para menús de Consulta
+
     def esconderBotonesModificar(self, botonMostrar, x1, y1, button1, button2, campoDeshabilitar):
         # Esconde button1 y button2 y muestra el boton botonMostrar
         button1.place_forget()
@@ -515,12 +528,11 @@ class Inicio:
             self.usuarioEncontrado = True
         
         else:
-            # self.mostrarMensajeErr(self.menuConsultarUsuarios, "Usuario no encontrado", 350, 500)
             self.mostrarMensaje("Error", "Usuario no encontrado")
             self.escribirTextoCampo(self.campoNombreCompleto, "")
             self.escribirTextoCampo(self.campoClave, "")
             self.usuarioEncontrado = False
-        
+      
     def actualizarInformacionUsuario(self, columna, campoNuevoDato, botonCancelar):
         actualizarInformacionUsuario(self.campoUsuario.get().strip(), columna, campoNuevoDato.get().strip())
         botonCancelar.invoke()
@@ -529,35 +541,100 @@ class Inicio:
     
         return None
 
+# Funciones para menús de Creación de Usuarios y Miembros
+
     def crearUsuario(self):
         if self.campoClave.get().strip() == "" or self.campoClave.get().strip() == " " or self.campoClave.get() == False:
-            print ("Coloque una contraseña por favor")
+            self.mostrarMensaje("Error","Coloque una contraseña por favor")
 
 
         elif len(self.campoClave.get().strip()) < 4:
-            print("Coloque una contraseña con 4 o más caracteres")
+            self.mostrarMensaje("Error","Coloque una contraseña con 4 o más caracteres")
         
         else:
 
             if verificarUsuario(self.campoUsuario.get()) == False: ## si usuario NO existe
                  
-                resultado = agregarUsuario(self.campoNombreCompleto.get(), self.campoUsuario.get(), self.campoClave.get() ,None)
+                resultado = agregarUsuario(self.campoNombreCompleto.get(), self.campoUsuario.get(), self.campoClave.get() ,self.listaRoles.get())
                 
                 if resultado:
-                    print ("Usuario registrado")
+                    self.mostrarMensaje("Exito","Usuario creado con éxito")
                     self.limpiarFormulario(self.campoNombreCompleto, self.campoClave, self.campoUsuario)
 
                 else: 
-                    print("Un error ocurrió, intentelo nuevamente")
+                    self.mostrarMensaje("Error","Ocurrió un error, inténtelo de nuevo")
     
             else:
-                print("Ya existe un usuario")
-            
+                self.mostrarMensaje("Error","Ya existe un usuario registrado")
 
+    def crearMiembro(self):
+
+        # Verificacion de campos
+        if self.campoNombreCompleto.get().strip() == "" or self.campoNombreCompleto.get().strip() == " " or self.campoNombreCompleto.get() == False:
+            self.mostrarMensaje("Error","Coloque un nombre y apellidos por favor")
+            return
+
+        elif self.campoCedula.get().strip() == "" or self.campoCedula.get().strip() == " " or self.campoCedula.get() == False:
+            self.mostrarMensaje("Error","Coloque una cédula")
+            return
+
+        elif self.campoID.get().strip() == "" or self.campoID.get().strip() == " " or self.campoID.get() == False:
+            self.mostrarMensaje("Error","Coloque un ID")
+            return
+
+        elif self.campoColaboracion.get().strip() == "" or self.campoColaboracion.get().strip() == " " or self.campoColaboracion.get() == False:
+            self.mostrarMensaje("Error","Coloque un monto de colaboración")
+            return
+        
+        elif self.listaAnos.current() == 0 or self.listaMeses.current() == 0 or self.listaDias.current() == 0:
+            self.mostrarMensaje("Error", "Fecha incorrecta, verificar")
+            return
+
+        
+        elif self.listaRoles.get() == "Apadrinados" and self.listaCategorias.current() == 0:
+            self.mostrarMensaje("Error", "Escoja una categoria para el apadrinado")
+            return 
+
+        ## Verificar que monto colaboracion sea numero
+
+        try:
+            valorColaboracion = int(self.campoColaboracion.get().strip())
+
+        except: 
+            self.mostrarMensaje("Error","Monto de colaboración tiene que ser numérico")
+            return
+
+        else:
+
+            if verificarMiembro(self.campoCedula.get()) == False: ## si miembro NO existe
+
+                fecha = self.listaAnos.get() + "-" + self.listaMeses.get() + "-" + self.listaDias.get()
+                resultado = agregarMiembro(self.campoNombreCompleto.get(), self.campoCedula.get(), fecha, self.campoID.get(),
+                                                self.campoColaboracion.get(), self.listaRoles.get(), self.listaCategorias.get())
+                
+                if resultado:
+                    self.mostrarMensaje("Exito","Usuario creado con éxito")
+                    self.limpiarFormulario(self.campoNombreCompleto, self.campoColaboracion, self.campoID, self.campoCedula)
+
+                    # Restablecer listas
+                    self.listaRoles.current(0)
+                    self.listaCategorias.current(0)
+                    self.listaDias.current(0)
+                    self.listaMeses.current(0)
+                    self.listaAnos.current(0)
+
+                else: 
+                    self.mostrarMensaje("Error","Ocurrió un error, inténtelo de nuevo")
+    
+            else:
+                self.mostrarMensaje("Exito","Ya existe un miembro registrado con la cédula")
+        
+        
+
+# Funciones extra         
     def limpiarFormulario(self, *campos):
         for campo in campos:
             campo.delete(0,'end')
-         
  
     def mostrarMensaje(self, titulo, mensaje):
         messagebox.showinfo(titulo, mensaje)
