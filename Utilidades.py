@@ -184,6 +184,39 @@ def obtenerInformacionUsuario(pUsuario):
         db.rollback()
         return []
 
+def obtenerInformacionMiembro(pCedula):
+    db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
+
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "SELECT Cedula, NombreCompleto, FechaNacimiento, ID, Colaboracion, TipoMiembro, TipoApadrinado  FROM Miembros WHERE Cedula ='{0}'".format(pCedula)
+    
+    try:
+        
+        result = cursor.execute(sql)
+
+        # Ejecutar el comando SQL 
+        results = cursor.fetchall()
+
+        # Guardar cambios
+        db.commit()
+            
+        # desconectar del servidor
+        db.close()
+
+        if result == 1: # Si es 1, es porque el select trajo datos
+            return results
+    
+        else:
+            return []
+
+    except:
+        # Rollback in case there is any error
+        db.rollback()
+        return []
+
+
 def actualizarInformacionUsuario(pUsuario, pColumna, nuevoDato):
     db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
 
