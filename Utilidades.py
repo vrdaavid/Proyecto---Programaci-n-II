@@ -216,7 +216,6 @@ def obtenerInformacionMiembro(pCedula):
         db.rollback()
         return []
 
-
 def actualizarInformacionUsuario(pUsuario, pColumna, nuevoDato):
     db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
 
@@ -243,3 +242,83 @@ def actualizarInformacionUsuario(pUsuario, pColumna, nuevoDato):
         db.rollback()
         return False
 
+def actualizarInformacionMiembro(pCedula, pColumna, nuevoDato):
+    db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
+
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "UPDATE Miembros SET {0} = '{1}' WHERE Cedula = '{2}'".format(pColumna, nuevoDato, pCedula)   
+    try:
+        
+        # Ejecutar el comando SQL 
+        cursor.execute(sql)
+
+        # Guardar cambios
+        db.commit()
+ 
+        # desconectar del servidor
+        db.close()
+        
+        return True
+
+
+    except:
+        # Rollback in case there is any error
+        db.rollback()
+        return False
+
+def actualizarFechaMiembro(pCedula, pColumna, nuevoDato):
+    db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
+
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "UPDATE Miembros SET {0} = STR_TO_DATE('{1}', '%Y-%m-%d') WHERE Cedula = '{2}'".format(pColumna, nuevoDato, pCedula)  
+  
+    try:
+        
+        # Ejecutar el comando SQL 
+        cursor.execute(sql)
+
+        # Guardar cambios
+        db.commit()
+ 
+        # desconectar del servidor
+        db.close()
+        
+        return True
+
+
+    except:
+        # Rollback in case there is any error
+        db.rollback()
+        return False
+
+
+def borrarUsuario(pUsuario):
+    db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
+
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "DELETE FROM Usuarios WHERE NombreUsuario = '{0}'".format(pUsuario)  
+  
+    try:
+        
+        # Ejecutar el comando SQL 
+        cursor.execute(sql)
+
+        # Guardar cambios
+        db.commit()
+ 
+        # desconectar del servidor
+        db.close()
+        
+        return True
+
+
+    except:
+        # Rollback in case there is any error
+        db.rollback()
+        return False
