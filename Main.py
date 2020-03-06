@@ -820,9 +820,14 @@ class Inicio:
     def prueba(self):
         None
 
+<<<<<<< HEAD
     def hola(self):
         None
 
+=======
+    def adios(self):
+        None
+>>>>>>> franciny
 # Funciones extra         
     def limpiarFormulario(self, *campos):
         for campo in campos:
