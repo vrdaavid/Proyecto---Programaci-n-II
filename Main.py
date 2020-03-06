@@ -820,6 +820,8 @@ class Inicio:
     def prueba(self):
         None
 
+    def adios(self):
+        None
 # Funciones extra         
     def limpiarFormulario(self, *campos):
         for campo in campos:
