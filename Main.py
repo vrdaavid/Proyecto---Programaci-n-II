@@ -652,7 +652,7 @@ class Inicio:
             
             else:
                 self.listaCategorias.place_forget()
-                
+
             self.usuarioEncontrado = True
         
         else:
@@ -670,7 +670,7 @@ class Inicio:
 
 
     def actualizarInformacionUsuario(self, columna, campoNuevoDato, botonCancelar):
-        resultado = actualizarInformacionUsuario(self.campoCedula.get().strip(), columna, campoNuevoDato.get().strip())
+        resultado = actualizarInformacionUsuario(self.campoUsuario.get().strip(), columna, campoNuevoDato.get().strip())
 
         if resultado:
             botonCancelar.invoke()
