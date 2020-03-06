@@ -125,7 +125,7 @@ class Inicio:
 
 
         # Boton Menu Niños
-        self.boton3 = Button(self.barraLateral, text = "Apadrinados",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
+        self.boton3 = Button(self.barraLateral, text = "Apadrinado",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
         self.boton3.place(x = 40, y = 350)
 
         self.boton3 = Button(self.barraLateral, text = "prueba",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
@@ -369,14 +369,14 @@ class Inicio:
         self.listaAnos.current(0)
 
         self.listaRoles = ttk.Combobox(self.menuCrearMiembros, state="readonly")
-        self.listaRoles["values"] = ["Padrinos", "Apadrinados", "CES", "Becados", "Postulantes"]
+        self.listaRoles["values"] = ["Padrino", "Apadrinado", "CES", "Becado", "Postulante"]
         self.listaRoles.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130")
         self.listaRoles.current(0)
 
         # Crear trigger para la lista, en caso de seleccionar apadrinado, mostrar la lista de categorias
         self.listaRoles.bind('<<ComboboxSelected>>', 
                              lambda event: self.listaCategorias.place(x = self.medidaCentroMenus_X  + 270, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130") 
-                                                                     if (self.listaRoles.get() == "Apadrinados") else self.listaCategorias.place_forget())
+                                                                     if (self.listaRoles.get() == "Apadrinado") else self.listaCategorias.place_forget())
 
         self.listaCategorias = ttk.Combobox(self.menuCrearMiembros, state="readonly")
         self.listaCategorias["values"] = ["", "Niño", "Adulto Mayor"]
@@ -463,13 +463,13 @@ class Inicio:
         self.listaAnos.current(0)
 
         self.listaRoles = ttk.Combobox(self.menuConsultarMiembros, state="readonly")
-        self.listaRoles["values"] = ["Padrinos", "Apadrinados", "CES", "Becados", "Postulantes"]
-        self.listaRoles.place(x = self.medidaCentroMenus_X  + 120, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130")
+        self.listaRoles["values"] = ["Padrino", "Apadrinado", "CES", "Becado", "Postulante"]
+        self.listaRoles.place(x = self.medidaCentroMenus_X  + 60, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130")
         self.listaRoles.current(0)
         
         self.listaRoles.bind('<<ComboboxSelected>>', 
-                             lambda event: self.listaCategorias.place(x = self.medidaCentroMenus_X  + 270, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130") 
-                                                                     if (self.listaRoles.get() == "Apadrinados") else self.listaCategorias.place_forget())
+                             lambda event: self.listaCategorias.place(x = self.medidaCentroMenus_X  + 180, y = self.medidaCentroMenus_Y + espacioY * 6, height="30", width="130") 
+                                                                     if (self.listaRoles.get() == "Apadrinado") else self.listaCategorias.place_forget())
         
         self.listaCategorias = ttk.Combobox(self.menuConsultarMiembros, state="readonly")
         self.listaCategorias["values"] = ["", "Niño", "Adulto Mayor"]
@@ -584,6 +584,29 @@ class Inicio:
                                                     self.campoColaboracion)  
                                                     ,text = "Cancelar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)              
         
+        # Boton Modificar Rol / Categoria
+        
+        self.botonMostrarModificarRol = Button(self.menuConsultarMiembros, 
+                                            command=lambda: self.mostrarModificar(self.botonMostrarModificarRol, self.botonGuardarModificarRol, self.botonCancelarModificarRol, 
+                                            self.medidaCentroMenus_X + 330 ,  self.medidaCentroMenus_Y + espacioY * 6,
+                                            self.medidaCentroMenus_X + 420 ,   self.medidaCentroMenus_Y + espacioY * 6, 
+                                            self.listaRoles, self.listaCategorias)  
+                                            ,text = "Modificar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+       
+        self.botonMostrarModificarRol.place(x = self.medidaCentroMenus_X + 330, y = self.medidaCentroMenus_Y + espacioY * 6,  width = 80, height = 25)
+        
+
+        self.botonGuardarModificarRol = Button(self.menuConsultarMiembros, 
+                                                    command= lambda: self.actualizarRolMiembro(self.botonCancelarModificarRol) ,                                                  
+                                                    text = "Guardar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+       
+        self.botonCancelarModificarRol = Button(self.menuConsultarMiembros, 
+                                                    command=lambda: self.esconderBotonesModificar(self.botonMostrarModificarRol,  
+                                                    self.medidaCentroMenus_X + 330, self.medidaCentroMenus_Y + espacioY * 6, 
+                                                    self.botonGuardarModificarRol, self.botonCancelarModificarRol, 
+                                                    self.listaRoles, self.listaCategorias)  
+                                                    ,text = "Cancelar",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton) 
+
 # Funciones para menús de Consulta
 
     def esconderBotonesModificar(self, botonMostrar, x1, y1, button1, button2, *camposDeshabilitar):
@@ -646,9 +669,10 @@ class Inicio:
             self.listaRoles.current(self.listaRoles.cget("values").index(informacion[0][5]))
 
 
-            if self.listaRoles.get() == "Apadrinados":
-                self.listaCategorias.place(x = self.medidaCentroMenus_X  + 270, y = self.medidaCentroMenus_Y + 80 * 6, height="30", width="130") 
+            if self.listaRoles.get() == "Apadrinado":
+                self.listaCategorias.place(x = self.medidaCentroMenus_X  + 175, y = self.medidaCentroMenus_Y + 80 * 6, height="30", width="130") 
                 self.listaCategorias.current(self.listaCategorias.cget("values").index(informacion[0][6]))
+                self.listaRoles.place(x = self.medidaCentroMenus_X  + 20, y = self.medidaCentroMenus_Y + 80 * 6, height="30", width="130")
             
             else:
                 self.listaCategorias.place_forget()
@@ -683,6 +707,25 @@ class Inicio:
     def actualizarInformacionMiembro(self, columna, campoNuevoDato, botonCancelar):
         resultado = actualizarInformacionMiembro(self.campoCedula.get().strip(), columna, campoNuevoDato.get().strip())
         
+        if resultado:
+            botonCancelar.invoke()
+            self.mostrarMensaje("Exito", "Cambios Realizados") 
+        
+        else:
+            self.mostrarMensaje("Error", "Un error ocurrió, inténtelo de nuevo") 
+    
+        return None
+
+    def actualizarRolMiembro(self, botonCancelar):
+        
+
+        resultado = actualizarInformacionMiembro(self.campoCedula.get().strip(), "TipoMiembro", self.listaRoles.get())
+
+        if self.listaRoles.get() != 'Apadrinado':
+            self.listaCategorias.current(0)
+
+        resultado = actualizarInformacionMiembro(self.campoCedula.get().strip(), "TipoApadrinado", self.listaCategorias.get())
+
         if resultado:
             botonCancelar.invoke()
             self.mostrarMensaje("Exito", "Cambios Realizados") 
@@ -779,7 +822,7 @@ class Inicio:
             return
 
         
-        elif self.listaRoles.get() == "Apadrinados" and self.listaCategorias.current() == 0:
+        elif self.listaRoles.get() == "Apadrinado" and self.listaCategorias.current() == 0:
             self.mostrarMensaje("Error", "Escoja una categoria para el apadrinado")
             return 
 
@@ -795,6 +838,9 @@ class Inicio:
         else:
 
             if verificarMiembro(self.campoCedula.get()) == False: ## si miembro NO existe
+
+                if self.listaRoles.get() != 'Apadrinado':
+                    self.listaCategorias.current(0)
 
                 fecha = self.listaAnos.get() + "-" + self.listaMeses.get() + "-" + self.listaDias.get()
                 resultado = agregarMiembro(self.campoNombreCompleto.get(), self.campoCedula.get(), fecha, self.campoID.get(),
