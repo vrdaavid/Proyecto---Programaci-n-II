@@ -817,17 +817,7 @@ class Inicio:
             else:
                 self.mostrarMensaje("Exito","Ya existe un miembro registrado con la cédula")
         
-    def prueba(self):
-        None
 
-<<<<<<< HEAD
-    def hola(self):
-        None
-
-=======
-    def adios(self):
-        None
->>>>>>> franciny
 # Funciones extra         
     def limpiarFormulario(self, *campos):
         for campo in campos:
