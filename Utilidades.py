@@ -295,7 +295,6 @@ def actualizarFechaMiembro(pCedula, pColumna, nuevoDato):
         db.rollback()
         return False
 
-
 def borrarUsuario(pUsuario):
     db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
 
@@ -322,3 +321,37 @@ def borrarUsuario(pUsuario):
         # Rollback in case there is any error
         db.rollback()
         return False
+
+def obtenerCumpleanos(pMes, pDia):
+    db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
+
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+
+
+    sql = "SELECT NombreCompleto, FechaNacimiento, Cedula, TipoMiembro FROM Miembros WHERE DAY(FechaNacimiento) = {0} AND MONTH(FechaNacimiento) = {1}".format(pDia, pMes)
+
+    try:
+        
+        result = cursor.execute(sql)
+
+        # Ejecutar el comando SQL 
+        results = cursor.fetchall()
+
+        # Guardar cambios
+        db.commit()
+            
+        # desconectar del servidor
+        db.close()
+
+        if result != 0: # Si es 1, es porque el select trajo datos
+            return results
+    
+        else:
+            return []
+
+    except:
+        # Rollback in case there is any error
+        db.rollback()
+        return []

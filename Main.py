@@ -3,9 +3,10 @@ import tkinter.font as TkFont
 from Utilidades import * 
 from tkinter import messagebox
 from tkinter import ttk
+import asyncio
+
 
 import datetime
-
 
 
 class Inicio:
@@ -74,11 +75,48 @@ class Inicio:
             self.agregarBarraLateral()
             self.mostrarMenuPrincipal()
 
+            self.loop = asyncio.get_event_loop()
+            self.loop.run_until_complete(self.procesoCumpleanos())
 
         else:          
             # muestra error 
             self.mostrarMensaje("Error", "Usuario / Contraseña incorrecta")
+    
+    async def procesoCumpleanos(self):
+        tarea = self.loop.create_task(self.calcularCumpleanos())
+        await asyncio.wait([tarea])
+
+    async def calcularCumpleanos(self):
+        cumpleaneros = obtenerCumpleanos(datetime.datetime.now().month, datetime.datetime.now().day)
+      
+        if cumpleaneros:
+            self.pantallaCumpleanos = Toplevel(self.raiz)
+            self.pantallaCumpleanos.geometry("600x600")
+            self.pantallaCumpleanos.focus()
+
+            tituloCumpleano = " " * (22 - len("CUMPLEAÑOS DE HOY")) + "CUMPLEAÑOS DE HOY"
+            titulo = Label(self.pantallaCumpleanos, text=tituloCumpleano, font = self.estiloLabel)
+            titulo.place(x = self.medidaCentroMenus_X - 120, y = self.medidaCentroMenus_Y)
+
+            tituloNombre = Label(self.pantallaCumpleanos, text="Nombre", font = self.estiloLabel)
+            tituloNombre.place(x = self.medidaCentroMenus_X - 150, y = self.medidaCentroMenus_Y * 2)
+
+            tituloNacimiento = Label(self.pantallaCumpleanos, text="Año Nacimiento", font = self.estiloLabel)
+            tituloNacimiento.place(x = self.medidaCentroMenus_X + 50, y = self.medidaCentroMenus_Y * 2)
             
+            x = 30
+            for cumpleanero in cumpleaneros:
+                label =  Label(self.pantallaCumpleanos, text=cumpleanero[0] , font = ('Helvetica' , 8, "bold"))
+                label.place(x = self.medidaCentroMenus_X*2 - 400, y = self.medidaCentroMenus_Y * 2 + x)
+
+                label2 =  Label(self.pantallaCumpleanos, text=cumpleanero[1] , font = ('Helvetica' , 8, "bold"))
+                label2.place(x = self.medidaCentroMenus_X*2 - 150, y = self.medidaCentroMenus_Y * 2 + x)
+
+                x += 30
+    
+            
+            botonCerrarVentana =  Button(self.pantallaCumpleanos, command=lambda: self.pantallaCumpleanos.destroy() ,text = "Cerrar",  bg = self.colorError, fg = "white",  relief = "flat", font = self.estiloBoton)
+            botonCerrarVentana.place(x = 250, y = 500)
 
     def eliminarMenus(self):
         # Función para limpiar todos los menus creados
@@ -97,7 +135,6 @@ class Inicio:
 
         self.agregarBotones()
     
-
     def agregarBotones(self):
         self.botonMenuInicio = Button(self.barraLateral, command = self.mostrarMenuPrincipal ,text = "Inicio",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
         self.botonMenuInicio.place(x = 40, y = 40)
@@ -133,7 +170,6 @@ class Inicio:
 
         self.boton4 = Button(self.barraLateral, command = self.salirMenuPrincipal, text = "Salir",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
         self.boton4.place(x = 40, y = 550)
-
 
     def salirMenuPrincipal(self):
         self.eliminarMenus()
