@@ -14,6 +14,8 @@ def ingresar(pUsuario, pClave):
         # Ejecutar el comando SQL 
         result = cursor.execute(sql)
 
+        results = cursor.fetchall()
+
         # Guardar cambios
         db.commit()
         
@@ -22,18 +24,16 @@ def ingresar(pUsuario, pClave):
 
         
         if result == 1: # Si es 1, es porque el select trajo datos
-            return True
+            return results
     
         else:
-            return False
+            return []
         
-
     except:
         # Rollback in case there is any error
         db.rollback()
-        return False
+        return []
 
-  
 def verificarUsuario(pUsuario):
     db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
 
@@ -302,6 +302,33 @@ def borrarUsuario(pUsuario):
 
     # Prepare SQL query to INSERT a record into the database.
     sql = "DELETE FROM Usuarios WHERE NombreUsuario = '{0}'".format(pUsuario)  
+  
+    try:
+        
+        # Ejecutar el comando SQL 
+        cursor.execute(sql)
+
+        # Guardar cambios
+        db.commit()
+ 
+        # desconectar del servidor
+        db.close()
+        
+        return True
+
+
+    except:
+        # Rollback in case there is any error
+        db.rollback()
+        return False
+
+def borrarMiembro(pCedula):
+    db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
+
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+    sql = "DELETE FROM Miembros WHERE Cedula = '{0}'".format(pCedula)  
   
     try:
         
