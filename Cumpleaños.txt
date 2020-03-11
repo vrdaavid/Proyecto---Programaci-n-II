@@ -1,8 +1,1 @@
-Nombre: Prueba 
-Fecha Nacimiento: 2012-03-10 
-Cedula: 1010 
-
-Nombre: David V 
-Fecha Nacimiento: 2012-03-10 
-Cedula: 1111 
-
+No hay cumpleaños

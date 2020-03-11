@@ -93,6 +93,7 @@ class Inicio:
             if self.rolActual == "Administrador":
                 self.permisoAdministrador = True
 
+            escribirEnBitacora("Ingreso al sistema del usuario " + self.usuarioActual, 1, "")
 
             # se limpia la raíz y se elimina la pantalla login
             self.pantallaLogin.destroy()
@@ -117,8 +118,8 @@ class Inicio:
     async def calcularCumpleanos(self):
         cumpleaneros = obtenerCumpleanos(datetime.datetime.now().month, datetime.datetime.now().day) # Trae todos los miembros que cumplen hoy
       
-        if cumpleaneros:  # Si existen miembros que cumplen hoy
 
+        if cumpleaneros:  # Si existen miembros que cumplen hoy
             self.pantallaCumpleanos = Toplevel(self.raiz)
             #self.pantallaCumpleanos.geometry("900x700")
 
@@ -134,13 +135,13 @@ class Inicio:
             self.pantallaCumpleanos.geometry("{}x{}+{}+{}".format(window_width, window_height, x_cordinate, y_cordinate))
 
             self.pantallaCumpleanos.focus()
-
+            self.pantallaCumpleanos.resizable(width=False, height=False)  # Deshabilitar tamaño variable 
 
             tituloCumpleano = " " * (22 - len("CUMPLEAÑOS DE HOY")) + "CUMPLEAÑOS DE HOY"
             titulo = Label(self.pantallaCumpleanos, text=tituloCumpleano, font = self.estiloLabel)
             titulo.place(x = 300, y = self.medidaCentroMenus_Y)
 
-            self.pantallaCumpleanos.resizable(width=False, height=False)  # Deshabilitar tamaño variable 
+  
 
             # Inicializar un objeto Treeview que servirá para mostrar los datos
             nombreColumnas = ('NombreCompleto', 'FechaNacimiento', 'Cedula', 'TipoMiembro')
@@ -172,13 +173,8 @@ class Inicio:
             botonCerrarVentana.place(x = 400, y = 500)
 
         else: # Si no hay cumpleaños muestra un mensaje
-            self.pantallaCumpleanos = Toplevel(self.raiz)
-            self.pantallaCumpleanos.geometry("600x600")
-            self.pantallaCumpleanos.focus()
 
-            tituloCumpleano = " " * (22 - len("CUMPLEAÑOS DE HOY")) + "NO HAY CUMPLEAÑOS EL DÍA DE HOY"
-            titulo = Label(self.pantallaCumpleanos, text=tituloCumpleano, font = self.estiloLabel)
-            titulo.place(x = 300, y = 280)
+            self.mostrarMensaje("Alerta", "NO HAY CUMPLEAÑOS EL DÍA DE HOY")
 
             text_file = open("Cumpleaños.txt", "w")
             text_file.writelines("No hay cumpleaños")
@@ -838,6 +834,8 @@ class Inicio:
         if resultado:
             botonCancelar.invoke()
             self.mostrarMensaje("Exito", "Cambios Realizados") 
+            escribirEnBitacora("Modificación del campo " + columna + " del usuario " + self.campoUsuario.get(), 1, self.usuarioActual)
+            
         
         else:
             self.mostrarMensaje("Error", "Un error ocurrió, inténtelo de nuevo") 
@@ -872,6 +870,7 @@ class Inicio:
         if resultado:
             botonCancelar.invoke()
             self.mostrarMensaje("Exito", "Cambios Realizados") 
+            escribirEnBitacora("Modificación del campo " + columna + " del miembro " + self.campoUsuario.get(), 1, self.usuarioActual)
         
         else:
             self.mostrarMensaje("Error", "Un error ocurrió, inténtelo de nuevo") 
@@ -896,6 +895,7 @@ class Inicio:
         if resultado:
             botonCancelar.invoke()
             self.mostrarMensaje("Exito", "Cambios Realizados") 
+            escribirEnBitacora("Modificación del campo TipoMiembro y TipoApadrinado " + "del miembro " + self.campoUsuario.get(), 1, self.usuarioActual)
         
         else:
             self.mostrarMensaje("Error", "Un error ocurrió, inténtelo de nuevo") 
@@ -916,6 +916,7 @@ class Inicio:
         if resultado:
             botonCancelar.invoke()
             self.mostrarMensaje("Exito", "Cambios Realizados") 
+            escribirEnBitacora("Modificación del campo " + columna + " del miembro " + self.campoUsuario.get(), 1, self.usuarioActual)
         
         else:
             self.mostrarMensaje("Error", "Un error ocurrió, inténtelo de nuevo") 
@@ -951,6 +952,7 @@ class Inicio:
 
                         borrarUsuario(self.campoUsuario.get().strip())
                         self.mostrarMensaje("Exito", "Usuario eliminado con éxito")
+                        escribirEnBitacora("Eliminacion del usuario " + self.campoUsuario.get(), 1, self.usuarioActual)
 
                         self.escribirTextoCampo(self.campoNombreCompleto, "")
                         self.escribirTextoCampo(self.campoClave, "")
@@ -1001,6 +1003,7 @@ class Inicio:
 
                         borrarMiembro(self.campoCedula.get().strip())
                         self.mostrarMensaje("Exito", "Miembro eliminado con éxito")
+                        escribirEnBitacora("Eliminacion del miembro " + self.campoUsuario.get(), 1, self.usuarioActual)
 
                         self.escribirTextoCampo(self.campoNombreCompleto, "")
                         self.listaDias.current(0)
@@ -1046,8 +1049,9 @@ class Inicio:
                 
                 if resultado:
                     self.mostrarMensaje("Exito","Usuario creado con éxito")
+                    escribirEnBitacora("Registro del usuario " + self.campoUsuario.get(), 1, self.usuarioActual)
                     self.limpiarFormulario(self.campoNombreCompleto, self.campoClave, self.campoUsuario)
-
+                    
                 else: 
                     self.mostrarMensaje("Error","Ocurrió un error, inténtelo de nuevo")
     
@@ -1106,6 +1110,7 @@ class Inicio:
             
             if resultado:
                 self.mostrarMensaje("Exito","Usuario creado con éxito")
+                escribirEnBitacora("Registro del miembros " + self.campoCedula.get(), 1, self.usuarioActual)
                 self.limpiarFormulario(self.campoNombreCompleto, self.campoColaboracion, self.campoID, self.campoCedula)
 
                 # Restablecer listas
@@ -1121,7 +1126,6 @@ class Inicio:
         else:
             self.mostrarMensaje("Exito","Ya existe un miembro registrado con la cédula")
         
-
 # Funciones extra         
     # Método para limpiar todos los campos específicado
     def limpiarFormulario(self, *campos):
@@ -1171,7 +1175,6 @@ class Inicio:
 
         self.boton2=Button(self.top,text='Cancelar',command= self.cancelarEnMensaje, bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
         self.boton2.place(x = 160, y = 135,  height = 30)
-
 
     def verificarAdmin(self):
         resultado = ingresar(self.campo1.get(), self.campo2.get())

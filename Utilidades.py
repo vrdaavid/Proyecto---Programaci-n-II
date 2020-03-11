@@ -1,5 +1,10 @@
 import pymysql
 
+import sys
+import win32evtlogutil
+import win32evtlog
+
+
 def ingresar(pUsuario, pClave):
 
     db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
@@ -382,3 +387,6 @@ def obtenerCumpleanos(pMes, pDia):
         # Rollback in case there is any error
         db.rollback()
         return []
+
+def escribirEnBitacora(nombreEvento, idEvento, autorEvento):
+    win32evtlogutil.ReportEvent(nombreEvento,idEvento, eventType=win32evtlog.EVENTLOG_INFORMATION_TYPE, strings = ["Creado por " + autorEvento])
