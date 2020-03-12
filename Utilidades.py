@@ -388,5 +388,75 @@ def obtenerCumpleanos(pMes, pDia):
         db.rollback()
         return []
 
+def obtenerCantidadDeNinosPorEdad():
+    db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
+
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+
+
+    sql = "SELECT YEAR(curdate()) - YEAR(FechaNacimiento) EDAD , COUNT(Cedula) CANTIDAD FROM MIEMBROS WHERE TipoApadrinado = 'Niño' GROUP BY YEAR(curdate()) - YEAR(FechaNacimiento) ORDER BY YEAR(curdate()) - YEAR(FechaNacimiento)"
+
+    try:
+        
+        result = cursor.execute(sql)
+
+        # Ejecutar el comando SQL 
+        results = cursor.fetchall()
+
+        # Guardar cambios
+        db.commit()
+            
+        # desconectar del servidor
+        db.close()
+
+        if result != 0: # Si es 1, es porque el select trajo datos
+            return results
+    
+        else:
+            return []
+
+    except:
+        # Rollback in case there is any error
+        db.rollback()
+        return []
+
+
+def obtenerCantidadDeMiembrosPorNacimiento():
+    db = pymysql.connect("localhost","root","1234","proyectoprogramacionii")
+
+    cursor = db.cursor()
+
+    # Prepare SQL query to INSERT a record into the database.
+
+
+    sql = "SELECT FechaNacimiento, COUNT(Cedula) CANTIDAD FROM MIEMBROS GROUP BY FechaNacimiento;"
+
+    try:
+        
+        result = cursor.execute(sql)
+
+        # Ejecutar el comando SQL 
+        results = cursor.fetchall()
+
+        # Guardar cambios
+        db.commit()
+            
+        # desconectar del servidor
+        db.close()
+
+        if result != 0: # Si es 1, es porque el select trajo datos
+            return results
+    
+        else:
+            return []
+
+    except:
+        # Rollback in case there is any error
+        db.rollback()
+        return []
+
 def escribirEnBitacora(nombreEvento, idEvento, autorEvento):
     win32evtlogutil.ReportEvent(nombreEvento,idEvento, eventType=win32evtlog.EVENTLOG_INFORMATION_TYPE, strings = ["Creado por " + autorEvento])
+

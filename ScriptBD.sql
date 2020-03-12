@@ -29,4 +29,11 @@ INSERT INTO Miembros values ("David Vargas", "116699999", "1997-03-02", "100012"
 SELECT *  FROM Usuarios;
 SELECT * FROM Miembros;
 
+INSERT INTO `proyectoprogramacionii`.`Miembros` (`NombreCompleto`, `Cedula`, `FechaNacimiento`, `ID`, `Colaboracion`, `TipoMiembro`, `TipoApadrinado`) VALUES ('Prueba', '1111', '2012-03-10', '1', '12000', 'Apadrinado', 'Niño');
+
+SELECT YEAR(curdate()) - YEAR(FechaNacimiento) EDAD , COUNT(Cedula) CANTIDAD FROM MIEMBROS
+WHERE TipoApadrinado = 'Niño'
+GROUP BY YEAR(curdate()) - YEAR(FechaNacimiento)
+ORDER BY YEAR(curdate()) - YEAR(FechaNacimiento);
+
 

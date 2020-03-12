@@ -214,7 +214,6 @@ class Inicio:
         self.botonMenuUsuarios4.place(x = 40, y = 180)
 
         # Botones menu miembros
-
         self.labelMiembros= Label(self.barraLateral ,text = "Miembros",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
         self.labelMiembros.place(x = 40, y = 250)
 
@@ -225,15 +224,12 @@ class Inicio:
         self.botonMenuMiembros2.place(x = 40, y = 290)
 
 
-        # Boton Menu Niños
-        self.boton3 = Button(self.barraLateral, text = "Apadrinado",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
-        self.boton3.place(x = 40, y = 350)
-
-        self.boton3 = Button(self.barraLateral, text = "Reportes",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
-        self.boton3.place(x = 40, y = 450)
-
+        # Boton menú reportes
+        self.botonMenuReportes = Button(self.barraLateral, command = self.mostrarMenuReporteria, text = "Reportes",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
+        self.botonMenuReportes.place(x = 40, y = 350)
+        
         self.boton4 = Button(self.barraLateral, command = self.salirMenuPrincipal, text = "Salir",  bg = self.colorPanel,  fg = "white",   relief = "flat", font = self.estiloBoton)
-        self.boton4.place(x = 40, y = 550)
+        self.boton4.place(x = 40, y = 600)
 
     # Método para eliminar todos los menús y regresar al Login
     def salirMenuPrincipal(self):
@@ -720,6 +716,29 @@ class Inicio:
 
         self.botonBorrarMiembro.place(x = self.medidaCentroMenus_X + 330, y = self.medidaCentroMenus_Y + espacioY * 7,  width = 200, height = 25)  
 
+    def mostrarMenuReporteria(self):
+        self.eliminarMenus()
+        self.menuReporteria = Canvas(self.raiz, width = 800, height = 720, bg = "#ecf0f1", highlightthickness=0, relief='ridge')
+        self.menuReporteria.pack()
+        self.pantallas.append(self.menuReporteria)
+
+        titulo = " " * (22 - len("REPORTERÍA")) + "REPORTERÍA"
+        self.titulo = Label(self.menuReporteria, text=titulo, font = self.estiloLabel)
+        self.titulo.place(x = self.medidaCentroMenus_X, y = self.medidaCentroMenus_Y)
+
+        espacioY = 80
+
+        # Lista
+        self.listaRoles = ttk.Combobox(self.menuReporteria, state="readonly")
+        self.listaRoles["values"] = ["Cantidad de Niños por Edad", "Cantidad de Miembros por Cumpleaños"]
+        self.listaRoles.place(x = self.medidaCentroMenus_X - 60, y = self.medidaCentroMenus_Y + espacioY, height="30", width="240")
+        self.listaRoles.current(0)
+
+        # Botón
+        self.botonCrearMiembro = Button(self.menuReporteria, command=lambda: self.crearReporte(self.listaRoles.current()) ,text = "Crear",  bg = self.colorPanel, fg = "white",  relief = "flat", font = self.estiloBoton)
+        self.botonCrearMiembro.place(x = self.medidaCentroMenus_X + 200 , y = self.medidaCentroMenus_Y + espacioY,  width = 130, height = 30)
+
+        
 # Funciones para menús de Consulta
 
     # Método para esconder los botones de Modificar y Cancelar 
@@ -1022,6 +1041,7 @@ class Inicio:
         else:
             self.mostrarMensaje("Error", "Se requiere un miembro válido")
 
+
 # Funciones para menús de Creación de Usuarios y Miembros
 
     # Verifica la información y crea un usuario dentro de la base de datos
@@ -1125,14 +1145,55 @@ class Inicio:
 
         else:
             self.mostrarMensaje("Exito","Ya existe un miembro registrado con la cédula")
+
+
+# Funciones módulo reporte
+
+    def crearReporte(self, opcionLista):
         
+        try:
+            self.listaReporte.destroy()
+        
+        except:
+            pass
+        
+        finally:
+            espacioY = 80
+            reporte = []
+            nombreColumnas = ()
+            
+            if opcionLista == 0:
+                reporte = obtenerCantidadDeNinosPorEdad()
+                nombreColumnas = ('EDAD', 'CANTIDAD DE NIÑOS')
+
+                obtenerCantidadDeMiembrosPorNacimiento
+
+            if opcionLista == 1:
+                reporte = obtenerCantidadDeMiembrosPorNacimiento()
+                nombreColumnas = ('FECHA NACIMIENTO', 'CANTIDAD DE MIEMBROS')
+
+            # Inicializar un objeto Treeview que servirá para mostrar los datos
+            
+            self.listaReporte = Treeview(self.menuReporteria, columns=nombreColumnas, show='headings')
+            self.listaReporte.place(x=self.medidaCentroMenus_X - 60, y = self.medidaCentroMenus_Y + espacioY * 2)
+
+            # Agrega los nombre de las columnas del Treeview
+            for col in nombreColumnas:
+                self.listaReporte.heading(col,  text = col)
+                self.listaReporte.column(col, anchor="w")
+
+            for dato in reporte:
+
+                # Insert una nueva fila dentro del Treeview
+                self.listaReporte.insert("", "end", values=(dato[0], dato[1]))
+
+
 # Funciones extra         
     # Método para limpiar todos los campos específicado
     def limpiarFormulario(self, *campos):
         for campo in campos:
             campo.delete(0,'end')
  
-
     # Método para imprimir un mensaje utilizando un msgbox
     def mostrarMensaje(self, titulo, mensaje):
         messagebox.showinfo(titulo, mensaje)
@@ -1203,6 +1264,9 @@ class Inicio:
         self.enMensaje = False
         self.permisoAdministrador = False
         self.top.destroy()
+
+
+
 
 Inicio()
 
