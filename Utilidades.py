@@ -1,8 +1,6 @@
 import pymysql
 
 import sys
-import win32evtlogutil
-import win32evtlog
 
 
 def ingresar(pUsuario, pClave):
@@ -457,6 +455,4 @@ def obtenerCantidadDeMiembrosPorNacimiento():
         db.rollback()
         return []
 
-def escribirEnBitacora(nombreEvento, idEvento, autorEvento):
-    win32evtlogutil.ReportEvent(nombreEvento,idEvento, eventType=win32evtlog.EVENTLOG_INFORMATION_TYPE, strings = ["Creado por " + autorEvento])
 

@@ -37,3 +37,7 @@ GROUP BY YEAR(curdate()) - YEAR(FechaNacimiento)
 ORDER BY YEAR(curdate()) - YEAR(FechaNacimiento);
 
 
+SELECT FechaNacimiento, COUNT(Cedula) CANTIDAD FROM MIEMBROS
+GROUP BY FechaNacimiento;
+
+

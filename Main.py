@@ -93,8 +93,6 @@ class Inicio:
             if self.rolActual == "Administrador":
                 self.permisoAdministrador = True
 
-            escribirEnBitacora("Ingreso al sistema del usuario " + self.usuarioActual, 1, "")
-
             # se limpia la raíz y se elimina la pantalla login
             self.pantallaLogin.destroy()
            
@@ -853,7 +851,6 @@ class Inicio:
         if resultado:
             botonCancelar.invoke()
             self.mostrarMensaje("Exito", "Cambios Realizados") 
-            escribirEnBitacora("Modificación del campo " + columna + " del usuario " + self.campoUsuario.get(), 1, self.usuarioActual)
             
         
         else:
@@ -889,7 +886,6 @@ class Inicio:
         if resultado:
             botonCancelar.invoke()
             self.mostrarMensaje("Exito", "Cambios Realizados") 
-            escribirEnBitacora("Modificación del campo " + columna + " del miembro " + self.campoUsuario.get(), 1, self.usuarioActual)
         
         else:
             self.mostrarMensaje("Error", "Un error ocurrió, inténtelo de nuevo") 
@@ -914,7 +910,6 @@ class Inicio:
         if resultado:
             botonCancelar.invoke()
             self.mostrarMensaje("Exito", "Cambios Realizados") 
-            escribirEnBitacora("Modificación del campo TipoMiembro y TipoApadrinado " + "del miembro " + self.campoUsuario.get(), 1, self.usuarioActual)
         
         else:
             self.mostrarMensaje("Error", "Un error ocurrió, inténtelo de nuevo") 
@@ -935,7 +930,6 @@ class Inicio:
         if resultado:
             botonCancelar.invoke()
             self.mostrarMensaje("Exito", "Cambios Realizados") 
-            escribirEnBitacora("Modificación del campo " + columna + " del miembro " + self.campoUsuario.get(), 1, self.usuarioActual)
         
         else:
             self.mostrarMensaje("Error", "Un error ocurrió, inténtelo de nuevo") 
@@ -971,7 +965,6 @@ class Inicio:
 
                         borrarUsuario(self.campoUsuario.get().strip())
                         self.mostrarMensaje("Exito", "Usuario eliminado con éxito")
-                        escribirEnBitacora("Eliminacion del usuario " + self.campoUsuario.get(), 1, self.usuarioActual)
 
                         self.escribirTextoCampo(self.campoNombreCompleto, "")
                         self.escribirTextoCampo(self.campoClave, "")
@@ -1022,7 +1015,6 @@ class Inicio:
 
                         borrarMiembro(self.campoCedula.get().strip())
                         self.mostrarMensaje("Exito", "Miembro eliminado con éxito")
-                        escribirEnBitacora("Eliminacion del miembro " + self.campoUsuario.get(), 1, self.usuarioActual)
 
                         self.escribirTextoCampo(self.campoNombreCompleto, "")
                         self.listaDias.current(0)
@@ -1069,7 +1061,6 @@ class Inicio:
                 
                 if resultado:
                     self.mostrarMensaje("Exito","Usuario creado con éxito")
-                    escribirEnBitacora("Registro del usuario " + self.campoUsuario.get(), 1, self.usuarioActual)
                     self.limpiarFormulario(self.campoNombreCompleto, self.campoClave, self.campoUsuario)
                     
                 else: 
@@ -1130,7 +1121,6 @@ class Inicio:
             
             if resultado:
                 self.mostrarMensaje("Exito","Usuario creado con éxito")
-                escribirEnBitacora("Registro del miembros " + self.campoCedula.get(), 1, self.usuarioActual)
                 self.limpiarFormulario(self.campoNombreCompleto, self.campoColaboracion, self.campoID, self.campoCedula)
 
                 # Restablecer listas
@@ -1267,7 +1257,13 @@ class Inicio:
 
 
 
-
 Inicio()
 
+'''
+def inicio():
+    programa = Inicio()
+    return 0
 
+if __name__ == "__main__":
+    inicio()
+'''
